@@ -61,24 +61,36 @@
 configuration `door-gnus-unbury-window-configuration' for gnus."
   (interactive)
   (setq door-gnus-bury-window-configuration (current-window-configuration))
-  (if door-gnus-unbury-window-configuration
-      (progn
-        (set-window-configuration door-gnus-unbury-window-configuration)
-        (setq door-gnus-unbury-window-configuration nil))
-    (delete-other-windows)
-    (switch-to-buffer "*Group*" nil t)))
+  (let ((bufs nil)
+        (bufname nil))
+    (dolist (bufs (buffer-list))
+      (setq bufname (buffer-name bufs))
+      (unless (string-match door-gnus-buffer-list-re bufname)
+        (bury-buffer bufname)))
+    (if door-gnus-unbury-window-configuration
+        (progn
+          (set-window-configuration door-gnus-unbury-window-configuration)
+          (setq door-gnus-unbury-window-configuration nil))
+      (delete-other-windows)
+      (switch-to-buffer "*Group*" nil t))))
 
 (defun door-gnus-bury ()
   "Bring gnus on top, restore if there is saved window
 configuration `door-gnus-bury-window-configuration' for gnus."
   (interactive)
   (setq door-gnus-unbury-window-configuration (current-window-configuration))
-  (if door-gnus-unbury-window-configuration
-      (progn
-        (set-window-configuration door-gnus-unbury-window-configuration)
-        (setq door-gnus-unbury-window-configuration nil))
-    (delete-other-windows)))
+  (let ((bufs nil)
+        (bufname nil))
+    (dolist (bufs (buffer-list))
+      (setq bufname (buffer-name bufs))
+      (when (string-match door-gnus-buffer-list-re bufname)
+        (bury-buffer bufname)))
+    (if door-gnus-bury-window-configuration
+        (progn
+          (set-window-configuration door-gnus-bury-window-configuration)
+          (setq door-gnus-bury-window-configuration nil)))))
 
 (global-set-key (kbd "<f9> g") 'door-gnus)
 
+(provide 'door-gnus)
 ;;; init-door-gnus.el ends here
