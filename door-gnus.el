@@ -42,6 +42,7 @@
 (defvar door-gnus-unbury-window-configuration nil
   "Window configuration which will be restored when unburying gnus.")
 
+;;;###autoload
 (defun door-gnus ()
   "Switch between gnus and non-gnus buffers, preserving window configurations."
   (interactive)
@@ -60,7 +61,6 @@
   "Bring gnus (unbury) on top.
 Restore if there is saved window configuration
 `door-gnus-unbury-window-configuration' for gnus."
-  (interactive)
   (setq door-gnus-bury-window-configuration (current-window-configuration))
   (let ((bufs nil)
         (bufname nil))
@@ -79,7 +79,6 @@ Restore if there is saved window configuration
   "Send gnus (bury) on to back.
 Restore if there is saved window configuration
 `door-gnus-bury-window-configuration' for gnus."
-  (interactive)
   (setq door-gnus-unbury-window-configuration (current-window-configuration))
   (let ((bufs nil)
         (bufname nil))
@@ -92,6 +91,7 @@ Restore if there is saved window configuration
           (set-window-configuration door-gnus-bury-window-configuration)
           (setq door-gnus-bury-window-configuration nil)))))
 
+;;;###autoload
 (global-set-key (kbd "<f9> g") 'door-gnus)
 
 (provide 'door-gnus)
