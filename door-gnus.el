@@ -96,6 +96,8 @@ Restore if there is saved window configuration
 
 (eval-after-load "gnus"
   '(define-key gnus-group-mode-map (kbd "q") 'door-gnus))
+(eval-after-load "gnus"
+  '(define-key gnus-group-mode-map (kbd "C-u q") 'gnus-group-exit))
 
 (provide 'door-gnus)
 ;;; door-gnus.el ends here
