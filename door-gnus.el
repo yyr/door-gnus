@@ -43,19 +43,23 @@
   "Window configuration which will be restored when unburying gnus.")
 
 ;;;###autoload
-(defun door-gnus ()
+(defun door-gnus (&optional arg)
   "Switch between gnus and non-gnus buffers, preserving window configurations."
-  (interactive)
-  (let ((bufname (buffer-name)))
-    (if (string-match door-gnus-buffer-list-re bufname)
-        (door-gnus-bury)
-      (if (get-buffer "*Group*")
-          (door-gnus-unbury)
-        (progn
-          (setq door-gnus-bury-window-configuration
-                (current-window-configuration))
-          (delete-other-windows)
-          (gnus))))))
+  (interactive "P")
+  (if arg
+      (when (eq major-mode 'gnus-group-mode)
+        (gnus-group-exit))
+    (let ((bufname (buffer-name)))
+      (if (string-match door-gnus-buffer-list-re bufname)
+          (door-gnus-bury)
+        (if (get-buffer "*Group*")
+            (door-gnus-unbury)
+          (progn
+            (setq door-gnus-bury-window-configuration
+                  (current-window-configuration))
+            (delete-other-windows)
+            (gnus)))))))
+
 
 (defun door-gnus-unbury ()
   "Bring gnus (unbury) on top.
@@ -96,8 +100,6 @@ Restore if there is saved window configuration
 
 (eval-after-load "gnus"
   '(define-key gnus-group-mode-map (kbd "q") 'door-gnus))
-(eval-after-load "gnus"
-  '(define-key gnus-group-mode-map (kbd "C-u q") 'gnus-group-exit))
 
 (provide 'door-gnus)
 ;;; door-gnus.el ends here
