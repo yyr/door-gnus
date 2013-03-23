@@ -98,6 +98,7 @@ Restore if there is saved window configuration
 ;;;###autoload
 (global-set-key (kbd "<f9> g") 'door-gnus)
 
+;;;###autoload
 (eval-after-load "gnus"
   '(define-key gnus-group-mode-map (kbd "q") 'door-gnus))
 
