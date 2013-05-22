@@ -46,9 +46,8 @@
 (defun door-gnus (&optional arg)
   "Switch between gnus and non-gnus buffers, preserving window configurations."
   (interactive "P")
-  (if arg
-      (when (eq major-mode 'gnus-group-mode)
-        (gnus-group-exit))
+  (if (and  arg (eq major-mode 'gnus-group-mode))
+      (gnus-group-exit)
     (let ((bufname (buffer-name)))
       (if (string-match door-gnus-buffer-list-re bufname)
           (door-gnus-bury)
