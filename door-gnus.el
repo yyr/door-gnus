@@ -46,19 +46,22 @@
 (defun door-gnus (&optional arg)
   "Switch between gnus and non-gnus buffers, preserving window configurations."
   (interactive "P")
-  (if (and  arg (eq major-mode 'gnus-group-mode))
-      (gnus-group-exit)
-    (let ((bufname (buffer-name)))
-      (if (string-match door-gnus-buffer-list-re bufname)
-          (door-gnus-bury)
-        (if (get-buffer "*Group*")
-            (door-gnus-unbury)
-          (progn
-            (setq door-gnus-bury-window-configuration
-                  (current-window-configuration))
-            (delete-other-windows)
-            (gnus)))))))
-
+  (if (file-exists-p gnus-startup-file)
+      (if (and  arg (eq major-mode 'gnus-group-mode))
+          (gnus-group-exit)
+        (let ((bufname (buffer-name)))
+          (if (string-match door-gnus-buffer-list-re bufname)
+              (door-gnus-bury)
+            (if (get-buffer "*Group*")
+                (door-gnus-unbury)
+              (progn
+                (setq door-gnus-bury-window-configuration
+                      (current-window-configuration))
+                (delete-other-windows)
+                (gnus))))))
+    (message "%s" (propertize
+                   "No startup file exits, call directly gnus"
+                   'face '(:background "#663333" :foreground "#ddbbbb")))))
 
 (defun door-gnus-unbury ()
   "Bring gnus (unbury) on top.
