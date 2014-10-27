@@ -1,4 +1,4 @@
-;;; door-gnus.el -- Hack to enter, bury, unbury gnus.
+;;; door-gnus.el --- Hack to enter, bury, unbury gnus.
 
 ;; Copyright (C) 2013 Yagnesh Raghava Yakkala <http://yagnesh.org>
 
