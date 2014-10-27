@@ -30,6 +30,10 @@
 ;;; Code:
 (require 'regexp-opt)
 
+;;;###autoload
+(defcustom door-gnus-key (kbd "<f9>g")
+  "Key binding for `door-gnus' command")
+
 (defvar door-gnus-buffer-list
   '("*Group*" "*BBDB*" "*Summary" "*mail" "*wide" "*Article" "*reply")
   "List of possible gnus buffers (desired ones at least).")
@@ -98,7 +102,7 @@ Restore if there is saved window configuration
           (setq door-gnus-bury-window-configuration nil)))))
 
 ;;;###autoload
-(global-set-key (kbd "<f9> g") 'door-gnus)
+(global-set-key door-gnus-key 'door-gnus)
 
 ;;;###autoload
 (eval-after-load "gnus"
