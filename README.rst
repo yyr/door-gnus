@@ -7,6 +7,7 @@ Key bindings
 There is only one key binding available, of course you can customize that.
 
 ::
+
    f9  g  door-gnus
 
 
